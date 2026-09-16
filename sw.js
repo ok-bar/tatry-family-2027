@@ -1,4 +1,4 @@
-const CACHE='tatry-trip-313aecfeeae3e397';
+const CACHE='tatry-trip-5e5944b2bc4c445d';
 const ASSETS=["./","./index.html","./style.css","./data.js","./trip-tools.js","./app.js","./offline.js","./tatras.jpg","./manifest.webmanifest","./icon.svg","./icon-192.png","./icon-512.png","./offline-copy.html"];
 const absolute=p=>new URL(p,self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(ASSETS.map(p=>new Request(absolute(p),{cache:'reload'})));await cache.put(absolute('./__offline_saved__'),new Response(JSON.stringify({savedAt:new Date().toISOString()})));await self.skipWaiting()})()));
