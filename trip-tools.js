@@ -1,3 +1,4 @@
+document.addEventListener('submit',e=>{if(['file-form','expense-form','budget-form'].includes(e.target.id))e.preventDefault()},true);
 /* Personal trip data stays in this browser; no uploads or network requests. */
 const TripTools=(()=>{
 const LIMIT=100*1024*1024,ONE=20*1024*1024,MIME=['application/pdf','image/jpeg','image/png','image/webp'];

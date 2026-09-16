@@ -2134,7 +2134,8 @@ const AUDIT = [
     "נוספו מיקומים מפורטים וקישורים ישירים. Orlíkovo מתחת למקפצות; חוות הכבשים והכדורים ב־Priehyba; המיני־רכבת ליד A6 ב־Biela Púť.",
     "https://www.jasna.sk/en/activities/summer-activities"
   ]
-];</script><script>/* Personal trip data stays in this browser; no uploads or network requests. */
+];</script><script>document.addEventListener('submit',e=>{if(['file-form','expense-form','budget-form'].includes(e.target.id))e.preventDefault()},true);
+/* Personal trip data stays in this browser; no uploads or network requests. */
 const TripTools=(()=>{
 const LIMIT=100*1024*1024,ONE=20*1024*1024,MIME=['application/pdf','image/jpeg','image/png','image/webp'];
 let db,ready=false,error='',files=[],expenses=[],budget=0,filter='',editing='',busy=false;
