@@ -1,5 +1,5 @@
-const CACHE='tatry-trip-527ef3804f033f4c';
-const ASSETS=["./","./index.html","./style.css","./data.js","./trip-tools.js","./app.js","./offline.js","./vendor/supabase.js","./vendor/leaflet.js","./vendor/leaflet.css","./map.js","./sync.js","./sync-ui.js","./tatras.jpg","./manifest.webmanifest","./icon.svg","./icon-192.png","./icon-512.png","./offline-copy.html"];
+const CACHE='tatry-trip-69abdbdd2c21b170';
+const ASSETS=["./","./index.html","./style-family-v2.css","./data.js","./trip-tools-family-v2.js","./app-family-v2.js","./offline.js","./vendor/supabase.js","./vendor/leaflet.js","./vendor/leaflet.css","./map.js","./sync.js","./sync-ui.js","./tatras.jpg","./manifest.webmanifest","./icon.svg","./icon-192.png","./icon-512.png","./offline-copy.html"];
 const absolute=p=>new URL(p,self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(ASSETS.map(p=>new Request(absolute(p),{cache:'reload'})));await cache.put(absolute('./__offline_saved__'),new Response(JSON.stringify({savedAt:new Date().toISOString()})));await self.skipWaiting()})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('tatry-trip-')&&key!==CACHE)await caches.delete(key);await self.clients.claim()})()));
