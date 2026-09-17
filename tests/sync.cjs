@@ -1,0 +1,31 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),{webcrypto}=require('node:crypto');
+const {IDBFactory}=require('fake-indexeddb');
+const {parseHTML}=require('linkedom');
+const path=require('node:path'),root=path.join(__dirname,'../dist');
+const remote=new Map(),blobs=new Map();let rejectWrite=false;
+const trip={id:'10000000-0000-4000-8000-000000000001',name:'Test',join_code:'AABBCCDD'};
+function fakeClient(uid){return {auth:{getSession:async()=>({data:{session:{user:{id:uid,email:uid+'@example.invalid'}}}}),onAuthStateChange(){},signOut:async()=>({})},rpc:async()=>({data:true}),channel:()=>({on(){return this},subscribe(){return this}}),removeChannel(){},storage:{from:()=>({list:async(p)=>({data:[...blobs.keys()].filter(k=>k.startsWith(p+"/")).map(k=>({name:k.split("/").pop()}))}),remove:async(paths)=>{paths.forEach(p=>blobs.delete(p));return {}},upload:async(p,b)=>{blobs.set(p,b);return {}},download:async(p)=>({data:blobs.get(p)})})},from(table){let write,filters=[],range=[0,499];const q={select(){return q},eq(k,v){filters.push([k,v]);return q},order(){return q},limit(){return q},range(a,b){range=[a,b];return q},upsert(row){write=row;return q},then(resolve,reject){if(write){if(rejectWrite)return Promise.resolve({error:{message:'test offline'}}).then(resolve,reject);remote.set(write.kind+':'+write.item_id,structuredClone(write));return Promise.resolve({data:write}).then(resolve,reject)}return Promise.resolve({data:table==='tatry_trips'?[trip]:[...remote.values()].filter(x=>filters.every(([k,v])=>x[k]===v)).slice(range[0],range[1]+1)}).then(resolve,reject)}};return q}}}
+async function device(uid,factory=new IDBFactory()){
+ const {document,CustomEvent}=parseHTML('<html><body><div id="main"></div><section id="trip-overview"></section></body></html>');const events=new EventTarget();
+ const c={document,indexedDB:factory,crypto:webcrypto,structuredClone,Blob,URL,console,Intl,Date,Map,Set,Promise,Event,CustomEvent:class extends Event{constructor(n,p){super(n);this.detail=p.detail}},navigator:{onLine:true},localStorage:{getItem(){return null},setItem(){}},setTimeout,clearTimeout,setInterval(){},confirm:()=>true,addEventListener:events.addEventListener.bind(events),dispatchEvent:events.dispatchEvent.bind(events),supabase:{createClient:()=>fakeClient(uid)}};c.window=c;vm.createContext(c);
+ vm.runInContext('const PLACES=[];const lookup=()=>null;const esc=s=>String(s??"");const main=document.getElementById("main");let view="days";const changeView=()=>{};',c);
+ let source=fs.readFileSync(path.join(root,'trip-tools.js'),'utf8');source=source.replace('return {init,filesView',"return {testPut:(store,row)=>transact([store],true,tx=>tx.objectStore(store).put(row)),testDelete:(store,id)=>transact([store],true,tx=>tx.objectStore(store).delete(id)),testAbort:()=>transact(['expenses'],true,tx=>{tx.objectStore('expenses').put({id:'aborted'});throw Error('rollback')}),init,filesView");
+ vm.runInContext(source,c);vm.runInContext(fs.readFileSync(path.join(root,'sync.js'),'utf8'),c);vm.runInContext('this.T=TripTools;this.S=FamilySync;',c);
+ c.addEventListener('tatry-private-state',e=>c.state=e.detail);await c.S.start();for(let i=0;i<100&&!c.T.connection();i++)await new Promise(r=>setTimeout(r,5));await new Promise(r=>setTimeout(r,20));return c;
+}
+const rows=(c,store)=>new Promise((res,rej)=>{const tx=c.T.connection().transaction(store),r=tx.objectStore(store).getAll();tx.oncomplete=()=>res(r.result);tx.onerror=()=>rej(tx.error)});
+async function settle(c){await c.S.cycle();await new Promise(r=>setTimeout(r,350));await c.S.cycle()}
+(async()=>{
+ const a=await device('owner'),b=await device('member');
+ const expense={id:'e1',title:'ice cream',place:'general',category:'אוכל וקינוחים',currency:'EUR',amount:800,eur:800,date:'2027-08-10'};
+ await a.T.testPut('expenses',expense);await settle(a);await settle(b);assert.equal((await rows(b,'expenses'))[0].eur,800);
+ a.navigator.onLine=false;await a.T.testPut('expenses',{...expense,id:'offline',eur:500,amount:500});await settle(a);assert.equal((await rows(a,'outbox')).length,1);
+ await b.T.testPut('expenses',{...expense,title:'updated by member',eur:900,amount:900});await settle(b);a.navigator.onLine=true;await settle(a);await settle(b);assert.equal((await rows(a,'expenses')).find(e=>e.id==='e1').eur,900);assert.equal((await rows(b,'expenses')).find(e=>e.id==='offline').eur,500);
+ await a.T.testPut('settings',{id:'budget',value:50000});await settle(a);await a.T.testPut('settings',{id:'budget',value:0});await a.T.mark('visit','aqua',true);await a.T.mark('check','2',true);await settle(a);await settle(b);assert.equal((await rows(b,'settings')).find(s=>s.id==='budget').value,0);assert.equal(b.state.visited.aqua,true);assert.equal(b.state.checked['2'],true);
+ await a.T.testDelete('expenses','e1');await settle(a);await settle(b);assert.equal((await rows(b,'expenses')).some(e=>e.id==='e1'),false);
+ rejectWrite=true;await a.T.testPut('expenses',{...expense,id:'retry'});await settle(a);assert.equal((await rows(a,'outbox')).length,1);rejectWrite=false;await settle(a);assert.equal((await rows(a,'outbox')).length,0);
+ await assert.rejects(a.T.testAbort());assert.equal((await rows(a,'expenses')).some(e=>e.id==='aborted'),false);assert.equal((await rows(a,'outbox')).length,0);
+ const blob=new Blob(['private ticket'],{type:'application/pdf'});await a.T.testPut('files',{id:'file1',title:'Ticket',name:'ticket.pdf',place:'flights',blob});await settle(a);await settle(b);const f=(await rows(b,'files'))[0];assert.equal(f.type,'application/pdf');assert.equal(await (await b.S.download(f)).text(),'private ticket');assert.equal(blobs.size,1);
+ await a.T.testDelete('files','file1');await settle(a);await settle(b);assert.equal((await rows(b,'files')).length,0);assert.equal(blobs.size,0);await b.S.signout();assert.equal(b.S.active,false);assert.equal(b.T.connection(),null);b.T.budgetView();assert.match(b.document.getElementById('main').textContent,/פרטי/);
+ console.log('PASS: two-device expenses, offline merge, budget zero, visit/check sync, deletion, retry, atomic rollback, private ticket download and logout');process.exit(0);
+})().catch(e=>{console.error(e);process.exit(1)});

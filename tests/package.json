@@ -1,0 +1,1 @@
+{"private":true,"scripts":{"test":"node sync.cjs"},"devDependencies":{"fake-indexeddb":"6.2.4","linkedom":"0.18.12"}}
