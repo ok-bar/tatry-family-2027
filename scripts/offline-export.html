@@ -1,4 +1,4 @@
-<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>עותק הטיול לשמירה</title><style>body{font:18px system-ui;max-width:650px;margin:60px auto;padding:24px;background:#eef5fa;color:#102c42}a,button{display:inline-block;background:#0b6d83;color:white;padding:14px 22px;border:0;border-radius:12px;font:inherit}p{line-height:1.7}</style><h1>הטיול שלכם, בקובץ אחד</h1><p id="status" role="status">מכינים את המסלול והתמונות לשמירה…</p><a id="save" hidden>שמירת קובץ הטיול ↓</a><p>הקובץ כולל את המסלול והתמונות. קבצים אישיים, הוצאות ופרטי הזמנות אינם נכללים בו.</p><p><a href="./">חזרה לאתר</a></p><script>
+<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script src="i18n-dictionary.js"></script><script src="i18n.js"></script><title>עותק הטיול לשמירה</title><style>body{font:18px system-ui;max-width:650px;margin:60px auto;padding:24px;background:#eef5fa;color:#102c42}a,button{display:inline-block;background:#0b6d83;color:white;padding:14px 22px;border:0;border-radius:12px;font:inherit}p{line-height:1.7}</style><h1>הטיול שלכם, בקובץ אחד</h1><p id="status" role="status">מכינים את המסלול והתמונות לשמירה…</p><a id="save" hidden>שמירת קובץ הטיול ↓</a><p>הקובץ כולל את המסלול והתמונות. קבצים אישיים, הוצאות ופרטי הזמנות אינם נכללים בו.</p><p><a href="./">חזרה לאתר</a></p><script>
 (async()=>{
 const status=document.querySelector('#status');
 try{
@@ -6,6 +6,7 @@ const get=async path=>{const r=await fetch(path);if(!r.ok)throw Error('לא ני
 const toData=blob=>new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob)});
 const raw=await (await get('index.html')).text();
 const doc=new DOMParser().parseFromString(raw,'text/html');
+const language=window.TripI18n?.language||'he';doc.documentElement.lang=language;doc.documentElement.dir=language==='en'?'ltr':'rtl';doc.documentElement.dataset.savedLanguage=language;
 const photos=await (await get('place-photos.js')).text();
 const paths=[...new Set(['tatras.jpg',...photos.matchAll(/photos\/[a-z0-9-]+\.jpg/g)].map(v=>typeof v==='string'?v:v[0]))];
 const images=new Map();
