@@ -2,7 +2,7 @@ const fs=require('fs'),path=require('path'),crypto=require('crypto'),r=fs.exists
 for(const [src,dst] of [['app.js','app-family-v2.js'],['trip-tools.js','trip-tools-family-v2.js'],['style.css','style-family-v2.css']])fs.copyFileSync(path.join(r,src),path.join(r,dst));
 const h=fs.readFileSync(path.join(__dirname,'offline-export.html'),'utf8');
 fs.writeFileSync(path.join(r,'offline-copy.html'),h);
-const files=['./','./index.html','./i18n-dictionary.js','./i18n.js','./style-family-v2.css','./data.js','./place-photos.js','./trip-tools-family-v2.js','./app-family-v2.js','./offline.js','./vendor/supabase.js','./vendor/leaflet.js','./vendor/leaflet.css','./map.js','./day-hub.js','./sync.js','./sync-ui.js','./tatras.jpg','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./offline-copy.html'];
+const files=['./','./index.html','./i18n-dictionary.js','./i18n.js','./style-family-v2.css','./data.js','./place-photos.js','./trip-tools-family-v2.js','./app-family-v2.js','./offline.js','./vendor/supabase.js','./vendor/leaflet.js','./vendor/leaflet.css','./map.js','./day-hub.js','./day-routes-data.js','./walking-routes.js','./day-routes.js','./sync.js','./sync-ui.js','./tatras.jpg','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./offline-copy.html'];
 files.push(...fs.readdirSync(path.join(r,'photos')).map(f=>'./photos/'+f));
 const digest=crypto.createHash('sha256');for(const f of files.slice(1))digest.update(fs.readFileSync(path.join(r,f)));const version=digest.digest('hex').slice(0,16);
 fs.writeFileSync(path.join(r,'sw.js'),`const CACHE='tatry-trip-${version}';

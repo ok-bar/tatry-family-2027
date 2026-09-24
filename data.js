@@ -66,11 +66,11 @@ const PLACES = [
     "map": "Tricklandia Stary Smokovec",
     "status": "פעילות ומחירון מופיעים באתר; שעות דרך המפעיל",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "ticket": {
       "url": "https://www.tricklandia.sk/en/home-en/",
@@ -101,11 +101,11 @@ const PLACES = [
     "map": "Stary Smokovec Hrebienok funicular lower station",
     "status": "רכבל פעיל לפי לוח המפעיל; לוח 2027 לבדיקה",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "ticket": {
       "url": "https://www.gopass.travel/",
@@ -136,11 +136,11 @@ const PLACES = [
     "map": "Vodopady Studeneho potoka",
     "status": "התאמה לעגלה תוקנה לפי אתר התיירות",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "kids": [
       "נלך לראות מים שקופצים בין סלעים. הדרך כוללת אבנים ומדרגות, אז נלך יחד ונחליט כמה רחוק מתאים לנו.",
@@ -872,11 +872,11 @@ const PLACES = [
     "map": "Koliba Kamzik Stary Smokovec 8",
     "status": "סניף ואתר רשמי אומתו",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "booking": {
       "level": "מומלץ להזמין שולחן",
@@ -928,11 +928,11 @@ const PLACES = [
     "map": "Cukraren u Elisky Stary Smokovec",
     "status": "נמצא רישום עסק ציבורי; שעות לא אומתו",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "kids": [
       "אם המקום פתוח, נעצור לקינוח. נסתכל מה יש היום ונבחר משהו טעים לחלוק או לאכול לבד.",
@@ -1231,11 +1231,11 @@ const PLACES = [
     "status": "מקור מצורף; נתוני 2027 אינם מובטחים.",
     "extra": "https://www.tatry.sk/wp-content/uploads/2020/12/Kam-s-detmi.pdf",
     "parking": {
-      "name": "VPS GRANDHOTEL · Starý Smokovec",
-      "query": "Grandhotel Stary Smokovec VPS parking",
+      "name": "VPS TATRA · Starý Smokovec",
+      "query": "49.1407202,20.2247109",
       "price": "לפי אתר התיירות: €5 לשעה או €15 ליום.",
       "source": "https://www.tatry.sk/infocentrum/doprava-a-infrastruktura/parkoviska/",
-      "note": "חניה בעיירה ליד Grandhotel; ממשיכים ברגל לתחנה או למקום. התעריף חל רק על חניון VPS המסומן."
+      "note": "חניון TATRA ליד Tricklandia. מרחקי ההליכה והחזרה לרכב מופיעים במפת היום; התעריף חל רק על חניון VPS המסומן."
     },
     "kids": [
       "אולי נוכל לגלוש על אבוב במסלול קיץ. עוד לא ידוע אם המתקן יפעל, אז זו הפתעה אפשרית ולא הבטחה.",
