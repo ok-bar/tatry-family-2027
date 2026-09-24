@@ -95,11 +95,10 @@ access.update({'rabka':'rabkapark','krzywa':'icepark','tower':'fispublic','orl':
 # A public car park close to the northern activities avoids the long lakeside transfer.
 lakeboth=[D('hotel','lakepark'),W('lakepark','boat'),W('boat','lakepark'),D('lakepark','fispublic'),W('fispublic','tower'),W('tower','orl'),W('orl','fispublic'),D('fispublic','hotel')]
 laketower=[D('hotel','fispublic'),W('fispublic','tower'),W('tower','orl'),W('orl','fispublic'),D('fispublic','hotel')]
-days[3]=[S('עד 10 דקות במעברים · מגדל ו־Orlíkovo','Transfers within 10 min · tower and Orlíkovo',laketower,'השייט לא נכנס למסלול הקצר: מהחניון המרכזי לרציף כ־741 מ׳, כלומר כ־12–15 דק׳ לכל כיוון. אין לנו עדיין חניה ציבורית מאומתת ליד הרציף שמקצרת זאת לעד 10 דקות. כדי להוסיף שייט צריך לאשר חניה/הסעה קרובה מראש. העלייה בתוך המגדל היא מאמץ נוסף.','Boating is excluded from this short route: central parking to the jetty is about 741 m, or 12–15 min each way. No confirmed public parking by the jetty yet reduces this to 10 min. Add boating only after confirming closer parking or transport. Climbing the tower is additional effort.'),S('עם שייט ושתי חניות · עדיין חורג מ־10 דקות לשייט','Boating with two car parks · boat access still exceeds 10 min',lakeboth,'אחרי השייט חוזרים לאותו רכב ונוסעים ל־P1 הציבורי ליד FIS. לא הולכים מהשייט למגדל. ההליכה לרציף ובחזרה עדיין חורגת מהמגבלה; המסלול מוצג להשוואה בלבד.','Return to the same car after boating, then drive to public P1 by FIS. Do not walk from the boats to the tower. Jetty access and return still exceed your limit; this variant is for comparison only.'),S('המסלול הישן ברגל · לא מתאים למגבלת 10 דקות','Original walking route · exceeds the 10-minute limit',lakefull)]
+days[3]=[S('שייט + טיול לצד האגם + מגדל + Orlíkovo · שתי חניות','Boating + lakeside stroll + tower + Orlíkovo · two car parks',lakeboth,'השייט והטיול לצד האגם נשארים בתכנית. מהחניון המרכזי לרציף כ־741 מ׳, כ־12–15 דקות לכל כיוון. לאחר הביקור באגם חוזרים לרכב ונוסעים ל־P1 הציבורי ליד FIS למגדל ול־Orlíkovo. השיטוט לצד האגם והעלייה במגדל אינם כלולים בסכום המעברים.','Boating and the lakeside stroll remain in the itinerary. Central parking to the jetty is about 741 m, or 12–15 min each way. After the lake visit, return to the car and drive to public P1 by FIS for the tower and Orlíkovo. Lakeside strolling and tower climbing are excluded from transfer totals.'),S('חלופה קצרה לבחירה · מגדל ו־Orlíkovo','Optional shorter route · tower and Orlíkovo',laketower),S('כל האטרקציות · מעבר ברגל לצד האגם','All attractions · lakeside walking transfer',lakefull)]
 # Keep optional long activity days visible, but make the short transfer plan the first choice.
-days[4]=[days[4][1],days[4][0]]
 shortbach=[D('hotel','bachpark'),L('bachpark','bachbob','walk','הכניסה המדויקת למגלשה לא אומתה. בקשו מהצוות חניה/גישה עד 10 דקות לפני שקונים כרטיס.','The coaster entrance is unverified. Ask staff to confirm parking/access within 10 min before buying a ticket.'),W('bachbob','bachpark'),D('bachpark','hotel')]
-days[2].insert(0,S('מגלשת הרים בלבד · יש לאשר גישה קצרה','Coaster only · confirm short access',shortbach,'שביל הצמרות עצמו כ־1.23 ק״מ ולכן אינו מתאים למגבלת 10 דקות הליכה כוללת ברצף. גם המעבר המחושב בין PANORAMA לממלכת היער מעל 10 דקות. המסלול המלא נשאר להשוואה, ולא כהמלצה למגבלה שלכם.','The treetop walk itself is about 1.23 km and does not fit a continuous 10-minute walking limit. The calculated PANORAMA–Forest Kingdom transfer also exceeds 10 min. The full variant remains for comparison, not as a recommendation under your limit.'))
+days[2].append(S('חלופה קצרה לבחירה · מגלשת הרים בלבד','Optional shorter route · coaster only',shortbach))
 # Use an entrance, not a pool-area centroid.
 for key,l in list(legs.items()):
  if l['a']=='aquapark' and l['b']=='aqua':l['b']='aquaentry';l['note']=['מחניית המבקרים לכניסה הראשית. זמן ההליכה בפנים, למלתחות ולבריכות, נוסף בנפרד.','From visitor parking to the main entrance. Walking inside to changing rooms and pools is additional.']
@@ -107,26 +106,24 @@ for key,l in list(legs.items()):
 # Preserve key identity for previously declared route lists; renderer resolves by endpoints too.
 for a,b in [('rabkapark','rabkaplay'),('icepark','krzywa'),('fispublic','tower'),('fispublic','orl'),('smokpark','smokbase'),('smokpark','eliska'),('museumpark','kometa'),('bonpark','bon'),('bachpark','bachbase')]:W(a,b);W(b,a)
 # Facts about walking inside attractions must not be hidden by short parking access.
+# Walking information does not remove attractions from the user's plan.
 activityWarnings={
- 'bach':['שביל הצמרות: כ־1.23 ק״מ בתוך הפעילות, בנוסף לגישה. לא מתאים ל־10 דקות הליכה רצופה.','Treetop walk: about 1.23 km inside the attraction, beyond access. Not a 10-minute continuous walk.'],
- 'wood':['Woodlandia: מסלול טבע של כ־1.6 ק״מ. חניה קרובה אינה מקצרת את המסלול; לא לבחור את המסלול המלא תחת מגבלת 10 דקות.','Woodlandia: a nature trail of about 1.6 km. Nearby parking does not shorten it; avoid the full trail with a 10-minute limit.'],
- 'falls':['המפלים דורשים הליכת שטח מעבר ל־10 דקות; אין תחליף של חניה צמודה. בחרו Hrebienok ליד הפוניקולר בלבד.','The waterfalls require a trail walk beyond 10 minutes, with no adjacent parking alternative. Stay near the Hrebienok funicular instead.'],
- 'tower':['העלייה בתוך המגדל אינה כלולה במרחק מהחניה. חניה קרובה אינה מבטיחה פעילות של עד 10 דקות הליכה.','Climbing inside the tower is excluded from parking access. Nearby parking does not make the activity a walk of under 10 minutes.'],
- 'jasna':['Slide Park הוא מסלול ירידה עם הליכה בין מגלשות. אורכו טרם נמדד כאן; תחת מגבלת 10 דקות בוחרים רכבלים וחזרה ולא מניחים שהמגלשות חוסכות הליכה.','Slide Park is a downhill trail with walking between slides. Its length is unmeasured here; with a 10-minute limit use the lifts and return instead.']}
-# Surface advice for every date, including the days without measured indoor / hotel paths.
+ 'bach':['שביל הצמרות: כ־1.23 ק״מ בתוך הפעילות, בנוסף להליכה מהחניה.','Treetop walk: about 1.23 km inside the attraction, in addition to parking access.'],
+ 'wood':['Woodlandia: מסלול טבע של כ־1.6 ק״מ בתוך הפעילות, נוסף על הגישה מהחניה.','Woodlandia: a nature trail of about 1.6 km inside the attraction, beyond parking access.'],
+ 'falls':['למפלים יש הליכת שטח נוספת מהפוניקולר; אין חניה צמודה שחוסכת את השביל. זמן ההליכה טרם אומת כאן.','The waterfalls require additional trail walking from the funicular; no adjacent parking avoids the trail. Walking time is unverified here.'],
+ 'tower':['העלייה בתוך המגדל אינה כלולה במרחק מהחניה.','Climbing inside the tower is excluded from parking access.'],
+ 'jasna':['Slide Park כולל הליכה בין המגלשות. אורך ההליכה טרם נמדד כאן; החזרה לחניה היא ברכבלים לפי לוח ההפעלה.','Slide Park includes walking between slides. Walking length is unmeasured here; return to parking by lifts subject to operation.']}
 familyNotes=[
- ['קרקוב → חניית פארק → משחק → אותה חניה → חניית גלידה → גלידה → אותה חניה → מלון. שעת נחיתה מאוחרת: דלגו על עצירה.','Kraków → park parking → playground → same car → ice-cream parking → café → same car → hotel. Skip a stop after a late landing.'],
- ['משאירים את הרכב ב־TATRA לעיירה ולפוניקולר; בוחרים ב־Hrebienok בלי המפלים.','Keep the car at TATRA for town and the funicular; choose Hrebienok without the waterfalls.'],
- ['חניה קרובה לגונדולה אינה מבטלת הליכה בתוך שביל הצמרות. המסלול המלא דורש שינוי כדי לעמוד במגבלה.','Parking near the gondola does not remove walking on the treetop walk. The full day needs changes to meet your limit.'],
- ['למגדל ול־Orlíkovo משתמשים ב־P1 ליד FIS. אין מעבר רגלי מומלץ מהשייט למגדל תחת המגבלה שלכם.','Use public P1 by FIS for the tower and Orlíkovo. Walking from the boats to the tower is not recommended under your limit.'],
- ['P2 → A6 → Priehyba → רכבל חזרה. Slide Park והפסגה הם אפשרויות נפרדות שדורשות בדיקת הליכה בתוך הפעילות.','P2 → A6 → Priehyba → lift back. Slide Park and the summit are separate choices requiring checks of walking within the activity.'],
- ['TatraBob: חניית המוזיאון. לרכבלים מעבירים את הרכב לחניון המדורג, ואחר כך חונים שוב ליד ארוחת הערב.','TatraBob: museum parking. Move the car to cascade parking for the lifts, then park again near dinner.'],
- ['אחרי הבריכות חוזרים לרכב לפני כל תוספת בעיר. אין מסלול ברגל מ־AquaCity ל־Forum או לרובע העתיק כברירת מחדל.','Return to the car after the pools before any town visit. Walking from AquaCity to Forum or the old quarter is not the default.'],
- ['בוחרים יום אחד. Woodlandia כוללת 1.6 ק״מ הליכה ולכן אינה ברירת המחדל למגבלה שלכם.','Choose one outing. Woodlandia involves a 1.6 km walk and is not the default under your limit.'],
- ['חניה נפרדת לקניות ולמסעדה; לא מחברים אותן בטיול רגלי.','Separate parking for shopping and dinner; do not connect them with a walking tour.'],
- ['הנסיעה היא מהמלון לשדה שנבחר. הליכה מהחזרת הרכב לטרמינל תלויה בחברת ההשכרה וטרם אומתה.','Drive from the hotel to the selected airport. Walking from rental return to the terminal depends on the rental company and remains unverified.']]
-days[7]=[days[7][1],days[7][0],days[7][2]]
-# Default flexible-day catch-up inherits the explicitly cautioned Bachledka options.
+ ['קרקוב ← חניית פארק ← משחק ← אותה חניה ← חניית גלידה ← גלידה ← אותה חניה ← מלון.','Kraków → park parking → playground → same car → ice-cream parking → café → same car → hotel.'],
+ ['חונים ליד העיירה ועולים בפוניקולר. אפשר לבחור גם במסלול הכולל מפלים; הליכת השטח מפורטת בנפרד.','Park by the town and take the funicular. The waterfall route is also available; trail walking is shown separately.'],
+ ['מגלשת ההרים, שביל הצמרות, PANORAMA וממלכת היער נשארים במסלול המלא.','The coaster, treetop walk, PANORAMA and Forest Kingdom remain in the full itinerary.'],
+ ['שייט וטיול לצד האגם, ואז מעבר ברכב ל־P1 ליד FIS למגדל ול־Orlíkovo.','Boating and a lakeside stroll, then drive to P1 by FIS for the tower and Orlíkovo.'],
+ ['Chopok, Priehyba ו־Slide Park נשארים במסלול. חוזרים לחניה ברכבלים לפי לוח ההפעלה.','Chopok, Priehyba and Slide Park remain in the itinerary. Return to parking by lifts subject to operation.'],
+ ['TatraBob: חניית המוזיאון. לרכבלים מעבירים רכב, ואחר כך חוזרים לחניה ליד הארוחה.','TatraBob: museum parking. Move the car for the lifts, then return to parking by dinner.'],
+ ['אחרי הבריכות אפשר להמשיך לתוספות בעיר עם חניה נפרדת לכל אזור.','After the pools, optional town stops use separate parking for each area.'],
+ ['Woodlandia ודיג נשארים כאפשרות הראשית; Tatralandia ושאר החלופות זמינות לבחירה.','Woodlandia and fishing remain the main option; Tatralandia and other alternatives remain available.'],
+ ['חניה נפרדת לקניות ולמסעדה.','Separate parking for shopping and dinner.'],
+ ['נסיעה מהמלון לשדה שנבחר; ההליכה מהחזרת הרכב לטרמינל טרם אומתה.','Drive from the hotel to the selected airport; rental return to terminal walking is unverified.']]
 
 N('tatralandia','Tatralandia · כניסה ראשית','Tatralandia · main entrance',[49.1053546,19.5705677],'node/9951083984')
 obj={'checked':'2026-09-24','nodes':nodes,'legs':legs,'days':days,'comparisons':comparisons,'access':access,'walkLimit':10,'activityWarnings':activityWarnings,'familyNotes':familyNotes}
