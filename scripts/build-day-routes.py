@@ -126,6 +126,11 @@ familyNotes=[
  ['נסיעה מהמלון לשדה שנבחר; ההליכה מהחזרת הרכב לטרמינל טרם אומתה.','Drive from the hotel to the selected airport; rental return to terminal walking is unverified.']]
 
 N('tatralandia','Tatralandia · כניסה ראשית','Tatralandia · main entrance',[49.1053546,19.5705677],'node/9951083984')
+# Optional ZOOKONTAKT visit; no existing day or attraction is replaced.
+N('zoopark','חניית ZOOKONTAKT · יש לאשר כניסה','ZOOKONTAKT parking · confirm entrance',kind='parking',query='ZOOKONTAKT Family Park parking Raztocka 21 Liptovsky Mikulas')
+nodes['zoopark']['source']='https://www.zookontakt.sk/'
+access['zookontakt']='zoopark'
+days[7].append(S('ZOOKONTAKT · אפשרות נוספת','ZOOKONTAKT · additional option',[D('hotel','zoopark'),W('zoopark','zookontakt'),W('zookontakt','zoopark'),D('zoopark','hotel')],'הסיכה מסמנת את מתחם הפארק. כניסת החניה והמרחק ברגל טרם אומתו; פתחו ניווט ואשרו חניה מול הפארק. ההליכה בתוך הפארק נוספת בנפרד.','The pin marks the park grounds. Parking entrance and walking distance are unverified; open navigation and confirm parking with the park. Walking inside the park is additional.'))
 obj={'checked':'2026-09-24','nodes':nodes,'legs':legs,'days':days,'comparisons':comparisons,'access':access,'walkLimit':10,'activityWarnings':activityWarnings,'familyNotes':familyNotes}
 p=root/'day-routes-data.js';p.write_text('/* Public access plan; coordinates © OpenStreetMap contributors, ODbL. */\nwindow.DAY_ROUTES='+json.dumps(obj,ensure_ascii=False,separators=(',',':'))+';\n')
 print(len(nodes),'nodes;',len(legs),'legs;',sum(map(len,days)),'day variants')

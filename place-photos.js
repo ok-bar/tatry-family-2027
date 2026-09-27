@@ -4,3 +4,5 @@ for(const p of PLACES){const photo=PLACE_PHOTOS[p.id];if(photo)p.photo={...photo
 
 PLACE_PHOTOS.aqua.credit="משחק לילדים במתחם AquaCity · אתר המפעיל";PLACES.find(p=>p.id==="aqua").photo.credit=PLACE_PHOTOS.aqua.credit;
 PLACE_PHOTOS.kometa.credit="Kométa · צילום חורף מאתר המפעיל";PLACES.find(p=>p.id==="kometa").photo.credit=PLACE_PHOTOS.kometa.credit;
+
+PLACE_PHOTOS.zookontakt={"src": "photos/zookontakt.jpg", "source": "https://www.zookontakt.sk/", "original": "https://www.zookontakt.sk/assets/hero_family_parrot.jpg", "alt": "ZOOKONTAKT · תמונת משפחה ותוכי מאתר הפארק", "credit": "תמונת המחשה מאתר ZOOKONTAKT"};PLACES.find(p=>p.id==="zookontakt").photo={...PLACE_PHOTOS.zookontakt};

@@ -252,6 +252,7 @@ const MAP_POINTS={
     "accuracy": "approach"
   }
 };
+MAP_POINTS.zookontakt={"lat": 49.1060875, "lon": 19.5723439, "source": "https://mapy.com/en/?id=1128376132&source=osm", "accuracy": "area", "note": "מיקום מתחם הפארק; הכניסה המדויקת אינה מאומתת."};
 const TripMap=(()=>{
  let map,group,filter='all';const markers=new Map(),groups=new Map();const colors=['#137365','#d1872d','#4c8464','#8b66ac','#b6526b','#318bb5','#827c25','#cb7342','#486ab5','#678886'];
  const note=pt=>pt.note||'מיקום מתוצאות מפה; הכניסה המדויקת לא נבדקה';
