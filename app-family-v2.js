@@ -1,5 +1,6 @@
 function placePhoto(p){const photo=p.photo;return photo?'<figure class="place-photo"><img src="'+esc(photo.src)+'" alt="'+esc(photo.alt)+'" loading="lazy" decoding="async" width="640" height="360"><figcaption>'+external(photo.source,photo.credit||'תמונה מאתר המקום')+'</figcaption></figure>':''}
 const $=s=>document.querySelector(s), main=$('#main');
+document.querySelector('.health-alert')?.insertAdjacentHTML('beforeend','<p><strong>אם בוחרים לא להתחסן:</strong> אפשר לקנות בסופר או בפארם Autan או תרסיס דוחה חרקים דומה. הוא מפחית חשיפה לקרציות, אך אינו תחליף לחיסון. לפי תווית המוצר, יש מוצרים שמספקים הגנה ממושכת עד 10 שעות, מקרציות עד 12 שעות ומזבובים עד שעתיים. יש למרוח או לרסס בדיוק לפי ההוראות, לבדוק התאמה לילדים ולא לרסס על הפנים או על עור מגורה.</p>');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hotel='Hotel Hubert Pod Poliankou 302 Gerlachov Slovakia';
 const lookup=id=>PLACES.find(p=>p.id===id);
